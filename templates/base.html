@@ -1,0 +1,132 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <title>{% block title %} {% endblock title %}
+  </title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/simplesidebar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/recruiter_css.css' %}" rel="stylesheet">
+  <link href="{% static 'css/jobseeker.css' %}" rel="stylesheet">
+  <link href="{% static 'css/job_app.css' %}" rel="stylesheet">
+
+  <style>
+    .showdescription {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light" id="sidebar-wrapper">
+      <a href="{%url 'homepage'%}" >
+        <img src='{%static "images/d.png"%}' style="height: 100px; width:200px;">
+        <div class="sidebar-heading text-light">
+        </div>
+      </a>
+      <div class="list-group list-group-flush">
+        {% if request.user.is_authenticated %}
+        <li class="list-group-item bg-white list-group-item-action text-dark text-center" style="letter-spacing: 0;">
+          <b><img class="rounded-circle" src="{{user.avatar.url}}" width="100%"
+              height="100em">{{request.user.first_name}} {{request.user.last_name}}</b></li>
+        {% endif %}
+        {% if request.user.role == 'R' %}
+        <a href="{% url 'RDashboard'%}" class="list-group-item list-group-item-action bg-light text-dark">Dashboard
+        </a>
+        <a href="{% url 'Postvacancy'%}" class="list-group-item list-group-item-action bg-light text-dark">Post Vacancy
+
+        </a>
+        <a href="{% url 'Viewappli' %}" class="list-group-item list-group-item-action bg-light text-dark">View
+          applicants</a>
+        <a href="{% url 'ViewVacancy' %}" class="list-group-item list-group-item-action bg-light text-dark">My
+          vacancy</a>
+        <a href="{% url 'Recruiterprofile' %}" class="list-group-item list-group-item-action bg-light text-dark">My
+          Profile</a>
+        <a href="{% url 'myconnection' %}" class="list-group-item list-group-item-action bg-light text-dark">My
+          Network</a>
+        <a href="{% url 'logout' %}" class="btn-lg btn-danger text-center">Logout</a>
+        {% elif request.user.role == 'J' %}
+        <a href="{% url 'JDashboard' %}" class="list-group-item list-group-item-action bg-light text-dark">Dashboard</a>
+        <a href="{% url 'JProfile' %}" class="list-group-item list-group-item-action bg-light text-dark">Profile</a>
+        <a href="{% url 'JViewVacancy' %}" class="list-group-item list-group-item-action bg-light text-dark">View
+          vacancys</a>
+        <a href="{% url 'AppliedVacancy' %}" class="list-group-item list-group-item-action bg-dlighttext-dark">Applied
+          Vacancy</a>
+        <a href="{% url 'myconnection' %}" class="list-group-item list-group-item-action bg-light text-dark">My
+          Network</a>
+        <a href="{% url 'logout' %}" class="btn-lg btn-danger text-center">Logout</a>
+        {% else %}
+        <a class="nav-link" href="{% url 'signup' %}"><button type="button" class="btn btn-Success">SignUp</button></a>
+        <a class="nav-link" href="{% url 'login' %}"><button type="button"
+            class="btn btn-info">&nbspLogin&nbsp</button></a>
+        {% endif %}
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light border-bottom bg-light">
+        <button class="btn btn-primary btn-lg" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link text-body font-weight-bolder" href="{% url 'homepage' %}">Home&nbsp&nbsp</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" style="background-image: linear-gradient(to bottom,#d9d9d9,white);">
+        <br>
+        {% block body %}
+
+        {% endblock body %}
+
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+  <!-- Footer -->
+  <footer class="page-footer font-small bg-secondary">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright: find my job.com</div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

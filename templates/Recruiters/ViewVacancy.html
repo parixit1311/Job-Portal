@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+{% for vacancy in vacancys %}
+  Company: {{vacancy.company}}
+<br>
+  JobCategory: {{vacancy.get_jobcategory_display}}
+<br> 
+  Title: {{vacancy.title}}
+<br>
+  Dateadded: {{vacancy.date_added}}
+<br>
+    Deadline: {{vacancy.deadline}}
+<br>
+    Description:{{vacancy.description|safe}}
+-----<br>
+{% endfor %}
+{% endblock body %}
